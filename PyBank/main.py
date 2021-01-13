@@ -38,8 +38,12 @@ with open(csvpath) as csvfile:
             'Assign value to increase_profit at start'
             if increase_profits is None:
                 'If second value is either positive/zero or negative'
-                if ((b < (int(values))) and (int(values) >=0)):
+                if ((b < (int(values))) and ((int(values) >=0) and (b >=0) )):
                     increase_profits = (int(values) - b)
+                    month_increase_profits = months
+                    b = int(values)
+                if ((b < (int(values))) and ((int(values) >=0) and (b < 0) )):
+                    increase_profits = (int(values) - (b))
                     month_increase_profits = months
                     b = int(values)
                     'Both are negative'
@@ -51,11 +55,11 @@ with open(csvpath) as csvfile:
                 'If first value is negative'    
 
 
-                #continue
+                continue
 
 
-            'Profit increased and second value is positive'
-            if ((b < (int(values))) and (int(values) >=0)):
+            'Profit increased, first and second value is positive'
+            if (((b < (int(values))) and (int(values) >=0)) and (b >=0) ):
                 'Substract two change values (decrease) value' 
                 if (int(values) - b) > (increase_profits) :
                     'Decreased value stored' 
@@ -64,7 +68,17 @@ with open(csvpath) as csvfile:
                     month_increase_profits = months
                     'Stored next value for comparison' 
                     b = int(values)
-                    'Profit decreased and second value is negative' 
+                    'Profit increased, first negative and second value is positive' 
+            if (((b < (int(values))) and (int(values) >=0)) and (b < 0) ):
+                'Substract two change values (decrease) value' 
+                if (int(values) - (b)) > (increase_profits) :
+                    'Decreased value stored' 
+                    increase_profits = (int(values) - (b))
+                    'Month stored' 
+                    month_increase_profits = months
+                    'Stored next value for comparison' 
+                    b = int(values)
+                    'Profit increased and second value is negative' 
             if ((b < int(values)) and (int(values) < 0)):
                 'Add negative values to account for the change from positive to negative.' 
                 if (int(values) - (b))  > increase_profits :
