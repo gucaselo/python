@@ -29,12 +29,9 @@ with open(csvpath) as csvfile:
         #print(values)
         if values != 'Profit/Losses':
             total_amount = total_amount + int(values)
-
-
-'----------------------------------------------------------------------------------------'
-'                            Determine Greatest Increase in Profits                      '
-'----------------------------------------------------------------------------------------'
-'Check if it is first row'
+            
+            'Determine Greatest Increase in Profits'
+            'Check if it is first row'
             if b is None:
                 b = int(values)
                 continue
@@ -45,20 +42,22 @@ with open(csvpath) as csvfile:
                     increase_profits = (int(values) - b)
                     month_increase_profits = months
                     b = int(values)
-                if ((b < int(values)) and (int(values) < 0)): 'Both are negative'
-                    increase_profits = (int(values) - (b)) ' Positive output from two negative values'
+                    'Both are negative'
+                if ((b < int(values)) and (int(values) < 0)):
+                    ' Positive output from two negative values' 
+                    increase_profits = (int(values) - (b)) 
                     month_increase_profits = months
                     b = int(values)
                 'If first value is negative'    
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
                 #continue
 
 
             'Profit increased and second value is positive'
             if ((b < (int(values))) and (int(values) >=0)):
                 'Substract two change values (decrease) value' 
-                if (int(values - b)) > (increase_profits) :
+                if (int(values) - b) > (increase_profits) :
                     'Decreased value stored' 
                     increase_profits = (int(values) - b)
                     'Month stored' 
@@ -77,10 +76,8 @@ with open(csvpath) as csvfile:
                     b = int(values) 
 
 
-'----------------------------------------------------------------------------------------'
-'                            Determine Greatest Decrease in Profits                      '
-'----------------------------------------------------------------------------------------'
 
+            'Determine Greatest Decrease in Profits'
             'Check if it is first row'
             if a is None:
                 a = int(values)
