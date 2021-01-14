@@ -1,6 +1,7 @@
 import os
 import csv
 
+
 csvpath = os.path.join('Resources', 'budget_data.csv')
 #di = dict()
 total_amount = 0
@@ -8,10 +9,11 @@ total_amount = 0
 average_change = 0
 increase_profits = None
 decrease_profits = None
-month_increase_profits = 0
-month_decrease_profits = 0
+month_increase_profits = None
+month_decrease_profits = None
 a = None
-b = None
+count = 0
+#b = None
 
 with open(csvpath) as csvfile:
     #pybank = csv.reader(csvfile, delimiter=',')
@@ -19,9 +21,6 @@ with open(csvpath) as csvfile:
     #pybank = list(csv.DictReader(csvfile))
     pybank = dict(csv.reader(csvfile))
     di = {}
-    print(type(pybank))
-    #next(pybank, None)
-    #print(pybank)
     #a = sum ((d['Date']) for d in pybank)
     #print(a)
     for months, values in pybank.items():
@@ -32,102 +31,67 @@ with open(csvpath) as csvfile:
             
             'Determine Greatest Increase in Profits'
             'Check if it is first row'
-            if b is None:
-                b = int(values)
-                continue
-            'Assign value to increase_profit at start'
-            if increase_profits is None:
-                'If second value is either positive/zero or negative'
-                if ((b < (int(values))) and ((int(values) >=0) and (b >=0) )):
-                    increase_profits = (int(values) - b)
-                    month_increase_profits = months
-                    b = int(values)
-                if ((b < (int(values))) and ((int(values) >=0) and (b < 0) )):
-                    increase_profits = (int(values) - (b))
-                    month_increase_profits = months
-                    b = int(values)
-                    'Both are negative'
-                if ((b < int(values)) and (int(values) < 0)):
-                    ' Positive output from two negative values' 
-                    increase_profits = (int(values) - (b)) 
-                    month_increase_profits = months
-                    b = int(values)
-                'If first value is negative'    
-
-
-                continue
-
-
-            'Profit increased, first and second value is positive'
-            if (((b < (int(values))) and (int(values) >=0)) and (b >=0) ):
-                'Substract two change values (decrease) value' 
-                if (int(values) - b) > (increase_profits) :
-                    'Decreased value stored' 
-                    increase_profits = (int(values) - b)
-                    'Month stored' 
-                    month_increase_profits = months
-                    'Stored next value for comparison' 
-                    b = int(values)
-                    'Profit increased, first negative and second value is positive' 
-            if (((b < (int(values))) and (int(values) >=0)) and (b < 0) ):
-                'Substract two change values (decrease) value' 
-                if (int(values) - (b)) > (increase_profits) :
-                    'Decreased value stored' 
-                    increase_profits = (int(values) - (b))
-                    'Month stored' 
-                    month_increase_profits = months
-                    'Stored next value for comparison' 
-                    b = int(values)
-                    'Profit increased and second value is negative' 
-            if ((b < int(values)) and (int(values) < 0)):
-                'Add negative values to account for the change from positive to negative.' 
-                if (int(values) - (b))  > increase_profits :
-                    'Decreased value stored' 
-                    increase_profits = (int(values) - (b))
-                    'Month stored' 
-                    month_increase_profits = months
-                    'stored next value for comparison' 
-                    b = int(values) 
-
-
-
-            'Determine Greatest Decrease in Profits'
-            'Check if it is first row'
             if a is None:
                 a = int(values)
                 continue
-            'Assign value to decrease_profit at start'
-            if decrease_profits is None:
-                if ((a > (int(values))) and (int(values) >=0)):
-                    decrease_profits = (a - int(values))
-                    month_decrease_profits = months
-                    a = int(values)
-                if ((a > int(values)) and (int(values) < 0)):
-                    decrease_profits = (int(values) - a)
-                    month_decrease_profits = months
-                    a = int(values)
-                continue
+            'Assign value to increase_profit at start'
+            if (increase_profits is None) and (decrease_profits is None):
+                'If second value is either positive/zero or negative'
+                ' Increase condition'
+                count = count + 1 
+                print('None', count)
 
-            'Profit decreased and second value is positive'
-            if ((a > (int(values))) and (int(values) >=0)):
-                'Substract two change values (decrease) value' 
-                if (a - int(values)) < (decrease_profits) :
-                    'Decreased value stored' 
-                    decrease_profits = (a - int(values))
-                    'Month stored' 
-                    month_decrease_profits = months
-                    'Stored next value for comparison' 
-                    a = int(values)
-                    'Profit decreased and second value is negative' 
-            if ((a > int(values)) and (int(values) < 0)):
-                'Add negative values to account for the change from positive to negative.' 
-                if (int(values) - a)  < decrease_profits :
-                    'Decreased value stored' 
+                if a < (int(values)): 
+                    increase_profits = (int(values) - (a))
+                    decrease_profits = 0
+                    month_increase_profits = months
+                    a = int(values)  
+                'Assign value to decrease_profit at start'
+                if a > (int(values)):
                     decrease_profits = (int(values) - a)
-                    'Month stored' 
+                    increase_profits = 0
                     month_decrease_profits = months
-                    'stored next value for comparison' 
-                    a = int(values) 
+                    a = int(values)                
+                continue
+            'Equal Profit/Loss values in consecutive months'
+            if a == (int(values)):
+                a = int(values)
+                count = count + 1
+                print('Equal', count)
+                continue
+            
+            'Profit increased, first and second value is positive'
+            if a < (int(values)):
+                count = count + 1
+                print('Increase Count', count)
+                'Substract two values (increase) value' 
+                if (int(values) - (a)) >= (increase_profits) :
+                    'Decreased value stored' 
+                    increase_profits = (int(values) - (a))
+                    'Month stored' 
+                    month_increase_profits = months
+                    'Stored next value for comparison'                                      
+                a = int(values)
+
+            if a > (int(values)):
+                count = count + 1
+                print('Decrease Count', count)
+                'Substract two change values (decrease) value'
+                if (int(values) - (a)) <= decrease_profits :
+                    'Change value store'
+                    decrease_profits = (int(values) - a)
+                    month_decrease_profits = months
+                a = int(values)
+
+                
+
+
+
+
+
+            
+
+
 
           #  if ((int(values > a)))
                 #increase_profits = int(values)
@@ -147,11 +111,16 @@ with open(csvpath) as csvfile:
         #months = months.split(',')[0]
      #   di[months] = di.get(months, 0) + 1
         #print(months[0])
+
+
+    #month_increase_profitss = datetime.strptime(month_increase_profits, '%m-%Y').date()
+
     print('Financial Analysis')
     print('----------------------------------')
     print('Total Months:', (int(len(pybank))-1))
     print('Total:', '$', total_amount)
-    print('Average Change:', total_amount/len(pybank))
+    print('Average Change:', total_amount/(count - 1))) ' Need to update'
     print('Greatest Increase in Profits: ' + month_increase_profits + ' ($' + str(increase_profits) + ')')
     print('Greatest Decrease in Profits: ' + month_decrease_profits + ' ($' + str(decrease_profits) + ')')
+    print(count)
 
