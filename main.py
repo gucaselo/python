@@ -3,10 +3,8 @@ import csv
 #import datetime
 
 #Path to read and write .csv and .txt for PyBank
-pybank_csvpath = os.path.join('PyBank', 'Resources', 'PyBank_budget_data.csv')
-pybank_txtpath = os.path.join('PyBank', 'Analysis', 'PyBank_Financial_Records_Analysis.txt')
-
-
+pybank_csvpath = os.path.join('Resources', 'PyBank_budget_data.csv')
+pybank_txtpath = os.path.join('Analysis', 'PyBank_Financial_Records_Analysis.txt')
 #di = dict()
 
 total_amount = 0
