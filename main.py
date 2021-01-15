@@ -3,12 +3,12 @@ import csv
 #import datetime
 
 #Path to read and write .csv and .txt for PyBank
-pybank_csvpath = os.path.join('Resources', 'PyBank_budget_data.csv')
-pybank_txtpath = os.path.join('Analysis', 'PyBank_Financial_Records_Analysis.txt')
+pybank_csvpath = os.path.join('PyBank', 'Resources', 'PyBank_budget_data.csv')
+pybank_txtpath = os.path.join('PyBank', 'Analysis', 'PyBank_Financial_Records_Analysis.txt')
 
 #Path to read and write .csv and .txt for PyPoll
 pypoll_csvpath = os.path.join('PyPoll', 'Resources', 'PyPoll_election_data.csv')
-pypoll_txtpath = os.path.koin('PyBank', 'Analysis', 'PyPoll_Votes_Analysis')
+pypoll_txtpath = os.path.join('PyPoll', 'Analysis', 'PyPoll_Votes_Analysis')
 
 #di = dict()
 
@@ -22,8 +22,8 @@ a = None
 count = 0
 
 #PyBank
-with open(pybank_csvpath) as csvfile:
-    pybank = dict(csv.reader(csvfile))
+with open(pybank_csvpath) as pybank_csvfile:
+    pybank = dict(csv.reader(pybank_csvfile))
 
     for months, values in pybank.items():
         
@@ -82,6 +82,39 @@ with open(pybank_csvpath) as csvfile:
                     decrease_profits = (int(values) - a)
                     month_decrease_profits = months
                 a = int(values)
+
+with open(pypoll_csvpath) as pypoll_csvfile:
+    pypoll = csv.reader(pypoll_csvpath)
+print(pypoll)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #PyBank Format average change value to two decimal places'  
 average_change = total_changes/count
