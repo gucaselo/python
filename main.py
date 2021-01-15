@@ -5,6 +5,11 @@ import csv
 #Path to read and write .csv and .txt for PyBank
 pybank_csvpath = os.path.join('Resources', 'PyBank_budget_data.csv')
 pybank_txtpath = os.path.join('Analysis', 'PyBank_Financial_Records_Analysis.txt')
+
+#Path to read and write .csv and .txt for PyPoll
+pypoll_csvpath = os.path.join('PyPoll', 'Resources', 'PyPoll_election_data.csv')
+pypoll_txtpath = os.path.koin('PyBank', 'Analysis', 'PyPoll_Votes_Analysis')
+
 #di = dict()
 
 total_amount = 0
