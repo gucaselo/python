@@ -1,6 +1,5 @@
 import os
 import csv
-#import datetime
 
 #Path to read and write .csv and .txt for PyBank
 pybank_csvpath = os.path.join('PyBank', 'Resources', 'PyBank_budget_data.csv')
@@ -93,15 +92,12 @@ with open(pypoll_csvpath) as pypoll_csvfile:
     #Create a list of dictionaries with all the data in the csv file
     for row in pypoll:
         pypoll_dict_list.append(row)
-
+    #Create a dictionary with voting count per candidate
     for x in range(0,len(pypoll_dict_list)):
         candidates_votes[pypoll_dict_list[x]['Candidate']] = candidates_votes.get((pypoll_dict_list[x]['Candidate']), 0) + 1
     print(candidates_votes)
 
- 
 
-
- 
 
 #PyBank Format average change value to two decimal places'  
 average_change = total_changes/count
@@ -133,33 +129,33 @@ print('Greatest Increase in Profits: ' + str(date_increase.strftime('%b-%Y')) + 
 print('Greatest Decrease in Profits: ' + str(date_decrease.strftime('%b-%Y')) + ' ($' + str(decrease_profits) + ')' + '\n')
 
 
-#Print PyPoll Votes Analysis results to the terminal
+#Print PyPoll Election Analysis results to the terminal
 print('Election Results')
 print('-------------------------')
 print('Total Votes:', len(pypoll_dict_list))
 print('-------------------------')
-for candidate, votes in candidates_votes.items():    
+for candidate, votes in candidates_votes.items(): #Loop to print candidate voting results    
     if votes > z:
         winner = candidate
     z = votes
     percentage = ((votes/(len(pypoll_dict_list)))*100)
-    percentage = '{:.3f}'.format(percentage)
-    print(candidate + ':', percentage + '%' + ' (' + str(votes) + ')')
+    percentage = '{:.3f}'.format(percentage) #Decimal places format
+    print(candidate + ':', percentage + '% (' + str(votes) + ')')
     
 print('-------------------------')
 print('Winner:', winner)
 print('-------------------------')
 
-
+#Export PyPoll Election Analysis results into a .txt file
 with open(pypoll_txtpath, 'w') as e:
     e.write('Election Results\n')
     e.write('-------------------------\n')
     e.write('Total Votes: ' + str(len(pypoll_dict_list)) + '\n')
     e.write('-------------------------\n')
-    for candidate, votes in candidates_votes.items():
+    for candidate, votes in candidates_votes.items(): #Loop to print candidate voting results
             percentage = ((votes/(len(pypoll_dict_list)))*100)
             percentage = '{:.3f}'.format(percentage)
-            e.writelines(candidate + [': '] + percentage + ['%'] + [' ('] + str(votes) + [')\n'])
+            e.writelines([candidate, ': ', percentage, '% (', str(votes), ')\n'])
     e.write('-------------------------\n')
     e.write('Winner: ' + winner + '\n')
     e.write('-------------------------\n')
