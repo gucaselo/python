@@ -8,10 +8,11 @@ pybank_txtpath = os.path.join('PyBank', 'Analysis', 'PyBank_Financial_Records_An
 
 #Path to read and write .csv and .txt for PyPoll
 pypoll_csvpath = os.path.join('PyPoll', 'Resources', 'PyPoll_election_data.csv')
-pypoll_txtpath = os.path.join('PyPoll', 'Analysis', 'PyPoll_Votes_Analysis')
+pypoll_txtpath = os.path.join('PyPoll', 'Analysis', 'PyPoll_Votes_Analysis.txt')
 
 #di = dict()
 
+#PyBank variables
 total_amount = 0
 total_changes = 0
 increase_profits = None
@@ -20,6 +21,10 @@ month_increase_profits = None
 month_decrease_profits = None
 a = None
 count = 0
+
+#PyPoll variables
+pypoll_dict_list = []
+candidates_votes = dict()
 
 #PyBank
 with open(pybank_csvpath) as pybank_csvfile:
@@ -84,25 +89,41 @@ with open(pybank_csvpath) as pybank_csvfile:
                 a = int(values)
 
 with open(pypoll_csvpath) as pypoll_csvfile:
-    pypoll = csv.reader(pypoll_csvpath)
-print(pypoll)
+    pypoll = csv.DictReader(pypoll_csvfile, delimiter = ',')
+    #Create a list of dictionaries with all the data in the csv file
+    for row in pypoll:
+        pypoll_dict_list.append(row)
+    #print(pypoll_dict_list[:(range(len(row))]['Candidate'])
+
+    #VotesperCandidate = {}
+    #for x in range(1,len(pypoll_dict_list)):
+        #VotesperCandidate.append(pypoll_dict_list[x]['Candidate'])
+    #print(pypoll_dict_list[:(len(pypoll_dict_list))]['Candidate'])
+    for x in range(0,len(pypoll_dict_list)):
+        #counts = dict()
+        candidates_votes[pypoll_dict_list[x]['Candidate']] = candidates_votes.get((pypoll_dict_list[x]['Candidate']), 0) + 1
+    print(candidates_votes)
+    print('Total Casted Votes', len(pypoll_dict_list))
+    
+        #print(pypoll_dict_list[x]['Candidate'])
 
 
 
+        #for voter, cedula in pypoll_dict_list:
+            #print(voter[0]['Voter ID'])
+
+   # for candidates in pypoll_dict_list:
+        #candidates_votes[candidates['candidate']] = candidates_votes[candidates['candidate']].get(candidates['candidate'], 0) + 1
+    #    print(candidates[0]['Candidate'])
 
 
 
+    
 
-
-
-
-
-
-
-
-
-
-
+    #print(pypoll_dict_list[0]['Voter ID'])
+    #print(pypoll_dict_list[1])
+    #print(len(pypoll_dict_list))
+    #print(candidates_votes)
 
 
 
@@ -143,4 +164,19 @@ print('Total Months:', (int(len(pybank))-1))
 print('Total:', '$', total_amount)
 print('Average Change: ' + '$' + str(average_change)) 
 print('Greatest Increase in Profits: ' + str(date_increase.strftime('%b-%Y')) + ' ($' + str(increase_profits) + ')')
-print('Greatest Decrease in Profits: ' + str(date_increase.strftime('%b-%Y')) + ' ($' + str(decrease_profits) + ')')
+print('Greatest Decrease in Profits: ' + str(date_decrease.strftime('%b-%Y')) + ' ($' + str(decrease_profits) + ')' + '\n')
+
+
+with open(pypoll_txtpath, 'w') as e:
+    e.write('Election Results\n')
+    e.write('-------------------------\n')
+    e.write('Total Votes: ' + str(len(pypoll_dict_list)) + '\n')
+    e.write('-------------------------\n')
+
+
+#Print PyPoll Votes Analysis results to the terminal
+print('Election Results')
+print('-------------------------')
+print('Total Votes:', len(pypoll_dict_list))
+print('-------------------------')
+#print('candidate_won', ':', 'percentage', '(', 'vote_count', ')')
