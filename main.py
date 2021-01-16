@@ -40,7 +40,6 @@ with open(pybank_csvpath) as pybank_csvfile:
                 continue
             #Assign value to increase_profit at start
             if (increase_profits is None) and (decrease_profits is None):
-                #If second value is either positive/zero or negative
                 #Increase condition
                 count = count + 1 
                 total_changes = total_changes + (int(values) - a)
@@ -63,7 +62,7 @@ with open(pybank_csvpath) as pybank_csvfile:
                 count = count + 1
                 continue
             
-            #PyBank Profit increased, first and second value is positive
+            #PyBank Increase Profits
             if a < (int(values)):
                 total_changes = total_changes + (int(values) - a)
                 count = count + 1
@@ -75,7 +74,7 @@ with open(pybank_csvpath) as pybank_csvfile:
                     month_increase_profits = months
                 #Stored next value for comparison
                 a = int(values)
-
+            #PyBank Decrease Profits
             if a > (int(values)):
                 total_changes = total_changes + (int(values) - a)
                 count = count + 1
