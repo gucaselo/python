@@ -22,13 +22,13 @@ with open(pybank_csvpath) as pybank_csvfile:
 
     for months, values in pybank.items():
         
-        if values != 'Profit/Losses':
+        if values != 'Profit/Losses': #Skip header
             total_amount = total_amount + int(values)
             
             #Determine Greatest Increase in Profits for PyBank
             #Check if it is first row
             if a is None:
-                a = int(values)
+                a = int(values) #This variable is used to store the initial value
                 continue
             #Assign value to increase_profit at start
             if (increase_profits is None) and (decrease_profits is None):
@@ -40,13 +40,13 @@ with open(pybank_csvpath) as pybank_csvfile:
                     increase_profits = (int(values) - (a))
                     decrease_profits = 0
                     month_increase_profits = months
-                    a = int(values)  
+                    a = int(values)  #This variable is used here to store previous value for comparison
                 #Assign value to decrease_profit at start
                 if a > (int(values)):
                     decrease_profits = (int(values) - a)
                     increase_profits = 0
                     month_decrease_profits = months
-                    a = int(values)                
+                    a = int(values)  #This variable is used here to store previous value for comparison               
                 continue
             #Equal Profit/Loss values in consecutive months
             if a == (int(values)):
