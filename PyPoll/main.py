@@ -8,7 +8,7 @@ pypoll_txtpath = os.path.join('Analysis', 'PyPoll_Votes_Analysis.txt')
 #PyPoll
 pypoll_dict_list = []
 candidates_votes = dict()
-z = 0
+z = 0 #Variable used to store previous row value for reference
 
 with open(pypoll_csvpath) as pypoll_csvfile:
     pypoll = csv.DictReader(pypoll_csvfile, delimiter = ',')
